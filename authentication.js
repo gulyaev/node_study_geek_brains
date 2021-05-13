@@ -7,10 +7,11 @@ const session = require('cookie-session');
 app.use(cookieParser('secret'));
 app.use(session({keys:['secret']}));
 
-app.use((req, res)=>{
-    let n = req.session.views || 0;
-    req.session.views = ++n;
-    res.end(`${n} views`);
-});
+const passport = require('passport');
+app.use(passport.initialize());
+app.use(passport.session());  
+
+const LocalStrategy = require('passport-local').Strategy;
+passport.use();
 
 app.listen(4000);
