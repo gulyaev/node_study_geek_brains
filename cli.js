@@ -1,14 +1,19 @@
-const readline = require('readline');
+const fs = require('fs');
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-rl.on('line', (text)=>{
-    console.log('You typed %s', text);
-
-    if(text==='exit'){
-        rl.close();
+/*
+fs.exists('./package.json', (exists) => {
+    if(exists){
+        fs.readFile('./package.json', (err, data) => {
+            console.log(data.toString());
+        });
     }
 });
+*/
+
+const exists = fs.existsSync('./package.json');
+
+if (exists) {
+    const data = fs.readFileSync('./package.json');
+
+    console.log(data.toString());
+}
