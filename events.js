@@ -2,15 +2,31 @@ const { EventEmitter } = require('events');
 
 class Kettle extends EventEmitter {
     start = () => {
+        setImmediate(()=>{
+            this.emit('setImmediate', {}); 
+        });
+
+        process.nextTick(()=>{
+            this.emit('process.nextTick', {}); 
+        });
+
         setTimeout(()=>{
-            this.emit('ready', {}); 
-        }, 3000);
+            this.emit('setTimeout', {}); 
+        },0);
     }
 }
 
 const k = new Kettle();
 k.start();
 
-k.on('ready', ()=>{
-    console.log('Чайник скипел');
+k.on('setImmediate', ()=>{
+    console.log('setImmediate');
+});
+
+k.on('process.nextTick', ()=>{
+    console.log('process.nextTick');
+});
+
+k.on('setTimeout', ()=>{
+    console.log('setTimeout');
 });
