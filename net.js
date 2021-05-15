@@ -1,7 +1,10 @@
-const http = require('http');
+const request = require('request');
+const cheerio = require('cheerio');
 
-http.createServer((req, res) => {
-     res.writeHead(200, {'Content-Type': 'application/json'});
-     res.write(JSON.stringify({name:'Vasya'}));
-     res.end();
-}).listen(8888);
+request('https://klops.ru/', (err, responce, html) => {
+    if(!err && responce.statusCode === 200) {
+        const $ = cheerio.load(html);
+
+        console.log($('.heading-section').eq(0).text());
+    }
+});
